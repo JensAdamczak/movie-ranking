@@ -26,7 +26,7 @@ $$p_{ij} = \frac{r_i}{r_i + r_j}$$
 The model can be expressed in the $logit$ linear form
 
 $$\log \frac{p_{ij}}{1 - p_{ji}} = \lambda_i - \lambda_j$$
-with $$\lambda_i = \log r_i$$ for all $$i$$.
+with $\lambda_i = \log r_i$ for all $i$.
 
 ## Regularization check
 *reg_check*
@@ -36,7 +36,7 @@ The Bradley-Terry model as used here has a few parameter - the regularization of
 ## LinearSVC
 *rank_svc*
 
-The LinearSVC ranking methos is based on ([Herbrich 1999](https://www.mendeley.com/catalogue/a2709c3c-0705-3058-89db-28aeab2161f2/). If we consider linear ranking functions, the ranking problem can be transformed into a two-class classification problem. For this, we form the difference of all comparable elements such that our data is transformed into 
+The LinearSVC ranking methos is based on ([Herbrich 1999](https://www.mendeley.com/catalogue/a2709c3c-0705-3058-89db-28aeab2161f2/)). If we consider linear ranking functions, the ranking problem can be transformed into a two-class classification problem. For this, we form the difference of all comparable elements such that our data is transformed into 
 $$(x′_k, y′_k)=(x_i−x_j, \text{sign}(y_i−y_j))$$ 
 for all comparable pairs.
 
