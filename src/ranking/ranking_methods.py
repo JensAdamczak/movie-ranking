@@ -219,10 +219,12 @@ def regcheck_bradley_terry(df_train, df_test, reg, plot=False):
                               squared=True)
 
     if plot:
-
+        print("")
         u.ascii_hist(df_win_stats['expected_wins'])
+        print("")
         u.ascii_hist(df_win_stats['actual_wins'])
-        u.ascii_plot(df_win_stats['expected_wins'], df_win_stats['actual_wins'])
+        print("")
+        u.ascii_plot(df_win_stats['expected_wins'], df_win_stats['actual_wins'], 20)
 
     return rmse
 
