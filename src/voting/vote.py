@@ -2,8 +2,6 @@ import click
 import numpy as np
 import pandas as pd
 
-# import sys
-# sys.path.append('/Users/adamczak/GitHub/movie-ranking-1/src/')
 from voting.ComparisonGui import ComparisonGui
 from pathlib import Path
 
@@ -65,15 +63,11 @@ def main(data_path, comparison_file, movie_file, n):
 
     df_comp = pd.read_csv(csv_comp, sep=";")
     df_movies = pd.read_csv(csv_movies, sep=";")
-    #df_comp = pd.read_csv("/Users/adamczak/GitHub/movie-ranking-1/data/comparison_results.csv", #sep=';')
-    #df_movies = pd.read_csv("/Users/adamczak/GitHub/movie-ranking-1/data/watched_movies.csv", #sep=";")
-
+ 
     df_movies_comp = select_movie_pairs(df_movies, df_comp, n)
     try:
         comp_gui = ComparisonGui(df_movies_comp)
 
-        # Before updating comparison_results.csv check if ordering is correct (smaller tconst first before) in comparison.csv and df_results
-        # Should we write a backup in votes/ dir? 
         if len(np.where(comp_gui.df_results['tconst_1'] > comp_gui.df_results['tconst_2'])) > 0:
 
             idx = ['tconst_1', 'tconst_2']
