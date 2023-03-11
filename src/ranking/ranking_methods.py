@@ -9,6 +9,8 @@ from ranking import utilities as u
 
 
 def rank_baseline(df):
+    """Baseline ranking algorithm: Nr. wins / Nr. competitions."""
+
     df_long = u.wide_to_long(df)
     df_wins = (
         df_long
@@ -23,6 +25,7 @@ def rank_baseline(df):
 
 
 def rank_directly(df, p=2):
+    """Rank according to the Perron-Frobenius theorem."""
 
     df_comp = df.copy()
     # Count number of comparisons that each movie has
@@ -67,8 +70,6 @@ def rank_directly(df, p=2):
     # Calculate ranking
     # A**2 * r0 gives the average win percentage of teams that were defeated 
     # (include all games in the denominator)
-    #v_res = (A*A) * r0
-
     v = np.linalg.matrix_power(A, p).dot(r0)
     v_norm = np.linalg.norm(v)
     v_res = np.array(v / v_norm).flatten()
@@ -82,6 +83,7 @@ def rank_directly(df, p=2):
 
 
 def score_bradley_terry(df, reg):
+    """Calculate scores according to the Bradley Terry score."""
 
     df_comp = df.copy()
 
@@ -123,6 +125,15 @@ def score_bradley_terry(df, reg):
 
 
 def rank_bradley_terry(df, df_competitions, reg=15):
+    """Calculate ranking based on Bradley Terry scores.
+    
+    Method:
+        Calculate the expected win probability for all competitions
+        based on the Bradley Terry scores of the movies in the competition.
+
+        The average expected win probability for each movie is the final score
+        and movies are ranked according to it.
+    """
 
     df_res = score_bradley_terry(df, reg)
 
@@ -162,6 +173,13 @@ def rank_bradley_terry(df, df_competitions, reg=15):
 
 
 def regcheck_bradley_terry(df_train, df_test, reg, plot=False):
+    """Calculate error of Bradley Terry model for a given regularization parameter.
+
+    Method:
+        Calculate RMSE for the actual and predicted wins of a Bradley Terry model 
+        for a given regularization value and train/test split.
+    """
+
     df_res = score_bradley_terry(df_train, reg)
 
     df_matches = (
@@ -230,6 +248,7 @@ def regcheck_bradley_terry(df_train, df_test, reg, plot=False):
 
 
 def rank_SVC(df, reg=15):
+    """Rank according to a linear SVM model."""
 
     df_comp = df.copy()
 

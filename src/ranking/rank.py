@@ -8,17 +8,6 @@ from ranking import utilities as u
 current_directory = Path(__file__).absolute().parent
 default_data_directory = current_directory.joinpath('..', '..', 'data')
 
-'''
-df_test = pd.DataFrame(
-    data = {
-        'timestamp': [1, 2, 3, 4],
-        'tconst_1': ['tt1', 'tt2', 'tt2', 'tt3'],
-        'tconst_2': ['tt2', 'tt4', 'tt3', 'tt5'],
-        'choice': [1, 1, 2, 2]
-    }
-)
-'''
-
 @click.command()
 @click.option('--data-path', default=None, 
               help='Directory for data files: comparison results and movie files.')

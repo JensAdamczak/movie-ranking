@@ -5,7 +5,22 @@ import tabulate as t
 from ranking import ranking_methods as rank
 
 def wide_to_long(df):
+    """Convert df from wide to long format.
 
+    Example:
+        df_test = pd.DataFrame(
+            data = {
+                'timestamp': [1, 2, 3, 4],
+                'tconst_1': ['tt1', 'tt2', 'tt2', 'tt3'],
+                'tconst_2': ['tt2', 'tt4', 'tt3', 'tt5'],
+                'choice': [1, 1, 2, 2]
+            }
+        )
+        # timestamp t_const_1 tconst_2 choice
+
+        df_out = wide_to_long(df_test)
+        # tconst won
+    """
     df_long = pd.melt(
         df, 
         id_vars=['timestamp', 'choice'], 
@@ -24,6 +39,7 @@ def wide_to_long(df):
 
 
 def ascii_hist(x, scale=20, symbol="+"):
+    """Plot histogram in ASCII format."""
 
     counts, bins = np.histogram(x)
     bin_centers = np.mean(np.vstack([bins[0:-1],bins[1:]]), axis=0)
@@ -40,8 +56,7 @@ def ascii_hist(x, scale=20, symbol="+"):
 
 
 def ascii_plot(x, y, scale=10):
-    # 2D ascii scatter plot
-    #char_map = list("""$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~<>i!lI;:,"^`'.""")
+    """2D scatter plot in ASCII format."""
 
     points = list(zip(x, y))
     df_points = pd.DataFrame(points, columns = ['x', 'y'])
@@ -75,6 +90,15 @@ def ascii_plot(x, y, scale=10):
 
 
 def print_movie_stats(df_wins, df_movies):
+    """Calculate and print statistics about voting results.
+
+    Statistics:
+        - Distribution of nr. of competitions
+        - Distribution of win ratios
+        - Most voted movies
+        - Movies with most wins
+        - Movies with best win ratio
+    """
     
     df_wins_long = wide_to_long(df_wins)
 
@@ -132,6 +156,13 @@ def print_movie_stats(df_wins, df_movies):
 
 
 def reg_check(df_wins):
+    """Regulatization check for Bradley Terry model.
+    
+    Method:
+        Run a series of regulatization checks (rank.regcheck_bradley_terry)
+        and plot results to determine best regularization parameter.
+    """
+
     np.random.seed(1201210)
     n_comp = df_wins.shape[0]
     idx_train = np.random.rand(n_comp) < 0.8
